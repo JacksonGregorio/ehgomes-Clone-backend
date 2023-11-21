@@ -10,10 +10,11 @@ class PostDash extends Model
     use HasFactory;
 
     public $fillable = [
-        'id',
         'title',
         'image',
         'text',
         'link'
     ];
+
+    protected $table = 'post_dashes';
 }

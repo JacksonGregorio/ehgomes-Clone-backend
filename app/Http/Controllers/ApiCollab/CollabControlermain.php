@@ -49,11 +49,15 @@ class CollabControlermain extends Controller
         if (!$collaborators) {
             return response()->json(['message' => 'Usuário não encontrado'], 401);
         }
-            if (Auth::guard('collaborators')->attempt($credentials)) {
-                return response()->json(['message' => 'Login bem-sucedido']);
-            } else {
-                return response()->json(['message' => 'Erro ao autenticar'], 401);
-            }
+        if (Auth::guard('collaborators')->attempt($credentials)) {
+            return response()->json([
+                'collaborators' => $collaborators,
+                'token' => $collaborators->createToken('token', ['role:collaborators'])->plainTextToken
+            ],200);
+            return response()->json(['message' => 'Login bem-sucedido']);
+        } else {
+            return response()->json(['message' => 'Erro ao autenticar'], 401);
+        }
     }
 
 }

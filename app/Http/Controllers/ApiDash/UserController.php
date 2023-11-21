@@ -9,10 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+   
     public function index()
     {
         $users = User::all();
         return response()->json(['users' => $users]);
+        
     }
 
     public function register(Request $request)
@@ -47,12 +49,21 @@ class UserController extends Controller
     
     if (Hash::check($credentials['password'], $user->password)) {
         if (Auth::attempt($credentials)) {
-            return response()->json(['message' => 'Login bem-sucedido']);
+            $authenticatedUser = Auth::user();
+            $token = $request->user()->createToken('invoice');
+            return response()->json(['user' => $authenticatedUser, 'token' => $token->plainTextToken], 200);
+            
         } else {
             return response()->json(['message' => 'Erro ao autenticar'], 401);
         }
     } else {
         return response()->json(['message' => 'password incorreta'], 401);
     }
+
 }
+
+
+    
+
+
 }

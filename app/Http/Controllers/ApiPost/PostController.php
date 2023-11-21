@@ -19,9 +19,9 @@ class PostController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function register(Request $request)
     {
-        $postDashes->validate([
+        $request->validate([
             'text' => 'required',
             'title' => 'required',
             'image' => 'required',
@@ -32,7 +32,7 @@ class PostController extends Controller
             'text' => $request->text,
             'title' => $request->title,
             'image' => $request->image,
-            'link' => $request->link,
+            'link' => $request->link
             
     ]);
     }
@@ -40,10 +40,6 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
